@@ -70,6 +70,20 @@ export default function AccessibilitySettings() {
     applySettings(newSettings);
   };
 
+  useEffect(() => {
+    if (settings.screenReader) {
+      document.body.setAttribute('role', 'application');
+      document.body.setAttribute('aria-label', 'BountyBud Application');
+      // Add focus outlines
+      document.documentElement.style.setProperty('--focus-outline', '3px solid #4299e1');
+    } else {
+      document.body.removeAttribute('role');
+      document.body.removeAttribute('aria-label');
+      document.documentElement.style.setProperty('--focus-outline', 'none');
+    }
+  }, [settings.screenReader]);
+
+
   return (
     <div className="relative">
       <button
@@ -159,4 +173,4 @@ export default function AccessibilitySettings() {
       )}
     </div>
   );
-} 
+}
