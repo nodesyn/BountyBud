@@ -57,3 +57,8 @@ Thumbs.db
 # Replit
 .replit
 replit.nix 
+
+# Docker
+.docker/
+
+.gitignore
