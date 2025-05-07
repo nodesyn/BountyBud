@@ -66,18 +66,18 @@ function QuickStart() {
 
 export default function Home() {
   return (
-    <div className="space-y-12">
+    <div className="flex flex-col gap-16">
       {/* Hero Section */}
-      <section className="py-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">BountyBud</h1>
-        <div className="flex justify-center">
+      <section className="flex flex-col items-center text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">BountyBud</h1>
+        <div className="w-full max-w-xs mb-4">
           <img
             src="/bb.png"
             alt="Bounty Bud"
-            className="max-h-60 items-center"
+            className="w-full h-auto"
           />
         </div>
-        <p className="text-xl mb-8 text-gray-300 max-w-3xl mx-auto">
+        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
           A comprehensive toolkit for bug bounty hunters and security
           researchers to generate commands, discover security tools, and
           optimize their workflow.
@@ -85,8 +85,8 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section>
-        <h2 className="text-2xl font-bold mb-6 text-center">Features</h2>
+      <section className="w-full">
+        <h2 className="text-2xl font-bold mb-8 text-center">Features</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="card">
             <h3 className="text-xl font-semibold mb-3 text-primary">
