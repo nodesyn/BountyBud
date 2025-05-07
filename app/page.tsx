@@ -119,17 +119,17 @@ export default function Home() {
 
           <div className="card">
             <h3 className="text-xl font-semibold mb-3 text-primary">
-              Browser Extensions
+              Documentation & Guides
             </h3>
             <p className="text-gray-300 mb-4">
-              Essential browser extensions to enhance your bug hunting workflow.
-              Filter by category and browser compatibility.
+              Access comprehensive guides and documentation to help you make
+              the most of security tools and optimize your testing workflow.
             </p>
             <Link
-              href="/browser-extensions"
+              href="/docs"
               className="text-primary hover:underline"
             >
-              View extensions →
+              View guides →
             </Link>
           </div>
         </div>

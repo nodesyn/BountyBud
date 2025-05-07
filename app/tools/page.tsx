@@ -3,6 +3,7 @@
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 // Use dynamic import with SSR disabled for CommandGenerator
 const CommandGenerator = dynamic(() => import('./commandGenerator'), {
@@ -49,6 +50,25 @@ export default function CommandGeneratorPage() {
         Generate commands for various security testing tools. Simply enter a domain and select
         the tool category you want to use.
       </p>
+
+      {/* Documentation Resources Box */}
+      <div className="p-4 bg-blue-900/30 border border-blue-800 rounded-md">
+        <h2 className="text-xl font-semibold mb-2">Documentation Resources</h2>
+        <p className="mb-3">Check out our in-depth guides to enhance your security testing:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>
+            <Link href="/docs/directory-scanning" className="text-primary hover:underline">
+              Directory Scanning Wordlist Guide
+            </Link>
+            <span className="text-gray-300 ml-2">- Learn how to choose the right wordlists from SecLists</span>
+          </li>
+          <li>
+            <Link href="/docs" className="text-primary hover:underline">
+              Browse All Documentation
+            </Link>
+          </li>
+        </ul>
+      </div>
 
       <ErrorBoundary fallback={<CommandGeneratorFallback />}>
         <CommandGenerator />

@@ -56,6 +56,14 @@ export default function Navigation() {
                   Extensions
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/docs"
+                  className={isActive("/docs")}
+                >
+                  Documentation
+                </Link>
+              </li>
             </ul>
             <AccessibilitySettings />
           </nav>
@@ -144,6 +152,15 @@ export default function Navigation() {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Extensions
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/docs"
+                    className={isActive("/docs")}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Documentation
                   </Link>
                 </li>
               </ul>
