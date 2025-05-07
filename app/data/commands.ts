@@ -191,6 +191,280 @@ export const categories: CommandCategory[] = [
     ]
   },
   {
+    id: "directory-scanning",
+    name: "Directory Scanning",
+    description: "Discovers hidden directories and files on web servers using various brute force techniques.",
+    icon: "folder-search",
+    commands: [
+      {
+        id: "gobuster-dir",
+        name: "Gobuster Directory Scan",
+        description: "Fast directory brute force scanning with Gobuster.",
+        command: "gobuster dir -u {url} -w {wordlist} -t {threads} -x {extensions} -o gobuster_results.txt",
+        placeholders: [
+          {
+            key: "url",
+            description: "Target URL (e.g., https://example.com/)",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "wordlist",
+            description: "Path to wordlist",
+            defaultValue: "/usr/share/wordlists/dirb/common.txt",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "threads",
+            description: "Number of threads",
+            defaultValue: "10",
+            required: true,
+            type: "number"
+          },
+          {
+            key: "extensions",
+            description: "File extensions to search",
+            defaultValue: "php,html,txt",
+            required: true,
+            type: "text"
+          }
+        ],
+        difficulty: "easy",
+        tags: ["reconnaissance", "active", "brute-force"],
+        outputExample: "===============================================================\nGobuster v3.2.0\nby OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)\n===============================================================\n[+] Url:                     https://example.com\n[+] Method:                  GET\n[+] Threads:                 10\n[+] Wordlist:                /usr/share/wordlists/dirb/common.txt\n[+] Negative Status codes:   404\n[+] User Agent:              gobuster/3.2.0\n[+] Extensions:              php,html,txt\n[+] Timeout:                 10s\n===============================================================\n/admin                (Status: 200) [Size: 1234]\n/images               (Status: 301) [Size: 178] [--> /images/]\n/index.html           (Status: 200) [Size: 4567]\n/login.php            (Status: 200) [Size: 789]\n/config.php           (Status: 403) [Size: 345]\n===============================================================",
+        referenceUrl: "https://github.com/OJ/gobuster"
+      },
+      {
+        id: "gobuster-vhost",
+        name: "Gobuster Virtual Host Scan",
+        description: "Brute forces virtual hosts on a target web server.",
+        command: "gobuster vhost -u {url} -w {wordlist} -t {threads} -o gobuster_vhost_results.txt",
+        placeholders: [
+          {
+            key: "url",
+            description: "Target URL (e.g., https://example.com/)",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "wordlist",
+            description: "Path to wordlist",
+            defaultValue: "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "threads",
+            description: "Number of threads",
+            defaultValue: "10",
+            required: true,
+            type: "number"
+          }
+        ],
+        difficulty: "medium",
+        tags: ["reconnaissance", "active", "vhost"],
+        referenceUrl: "https://github.com/OJ/gobuster"
+      },
+      {
+        id: "feroxbuster-basic",
+        name: "Feroxbuster Basic Scan",
+        description: "Fast recursive content discovery with Feroxbuster.",
+        command: "feroxbuster --url {url} --wordlist {wordlist} --threads {threads} --depth {depth} --output ferox_results.txt",
+        placeholders: [
+          {
+            key: "url",
+            description: "Target URL (e.g., https://example.com/)",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "wordlist",
+            description: "Path to wordlist",
+            defaultValue: "/usr/share/wordlists/dirb/common.txt",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "threads",
+            description: "Number of threads",
+            defaultValue: "50",
+            required: true,
+            type: "number"
+          },
+          {
+            key: "depth",
+            description: "Maximum recursion depth",
+            defaultValue: "2",
+            required: true,
+            type: "number"
+          }
+        ],
+        difficulty: "medium",
+        tags: ["reconnaissance", "active", "recursive"],
+        referenceUrl: "https://github.com/epi052/feroxbuster"
+      },
+      {
+        id: "feroxbuster-thorough",
+        name: "Feroxbuster Thorough Scan",
+        description: "Advanced recursive content discovery with file extension filtering and auto-tuning.",
+        command: "feroxbuster --url {url} --wordlist {wordlist} --threads {threads} --depth {depth} --collect-extensions --extract-links --scan-limit {limit} --auto-tune",
+        placeholders: [
+          {
+            key: "url",
+            description: "Target URL (e.g., https://example.com/)",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "wordlist",
+            description: "Path to wordlist",
+            defaultValue: "/usr/share/wordlists/dirb/big.txt",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "threads",
+            description: "Number of threads",
+            defaultValue: "50",
+            required: true,
+            type: "number"
+          },
+          {
+            key: "depth",
+            description: "Maximum recursion depth",
+            defaultValue: "4",
+            required: true,
+            type: "number"
+          },
+          {
+            key: "limit",
+            description: "Maximum concurrent scans",
+            defaultValue: "10",
+            required: true,
+            type: "number"
+          }
+        ],
+        difficulty: "hard",
+        tags: ["reconnaissance", "active", "recursive", "thorough"],
+        referenceUrl: "https://github.com/epi052/feroxbuster"
+      },
+      {
+        id: "ffuf-directory",
+        name: "FFUF Directory Scan",
+        description: "Fast web fuzzer for content discovery.",
+        command: "ffuf -u {url}/FUZZ -w {wordlist} -mc {status_codes} -o ffuf_results.json -of json",
+        placeholders: [
+          {
+            key: "url",
+            description: "Target URL (e.g., https://example.com)",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "wordlist",
+            description: "Path to wordlist",
+            defaultValue: "/usr/share/wordlists/dirb/common.txt",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "status_codes",
+            description: "Status codes to match",
+            defaultValue: "200,204,301,302,307,401,403,405",
+            required: true,
+            type: "text"
+          }
+        ],
+        difficulty: "easy",
+        tags: ["reconnaissance", "active", "fuzzing"],
+        referenceUrl: "https://github.com/ffuf/ffuf"
+      },
+      {
+        id: "ffuf-parameter",
+        name: "FFUF Parameter Fuzzing",
+        description: "Fuzzes parameters in URLs to discover hidden parameters.",
+        command: "ffuf -u {url}?FUZZ={value} -w {wordlist} -mc {status_codes} -fs {filter_size}",
+        placeholders: [
+          {
+            key: "url",
+            description: "Target URL (e.g., https://example.com/api)",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "value", 
+            description: "Value for the discovered parameter",
+            defaultValue: "test",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "wordlist",
+            description: "Path to wordlist",
+            defaultValue: "/usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "status_codes",
+            description: "Status codes to match",
+            defaultValue: "200,204,301,302,307,401,403",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "filter_size",
+            description: "Filter out responses with this size",
+            defaultValue: "4242",
+            required: true,
+            type: "text"
+          }
+        ],
+        difficulty: "medium",
+        tags: ["reconnaissance", "active", "fuzzing", "parameters"],
+        referenceUrl: "https://github.com/ffuf/ffuf"
+      },
+      {
+        id: "ffuf-vhost",
+        name: "FFUF Virtual Host Discovery",
+        description: "Discovers virtual hosts on a target web server without DNS records.",
+        command: "ffuf -u {url} -H \"Host: FUZZ.{domain}\" -w {wordlist} -fs {filter_size}",
+        placeholders: [
+          {
+            key: "url",
+            description: "Target URL (e.g., https://example.com)",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "domain",
+            description: "Base domain (e.g., example.com)",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "wordlist",
+            description: "Path to wordlist",
+            defaultValue: "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt",
+            required: true,
+            type: "text"
+          },
+          {
+            key: "filter_size",
+            description: "Filter out responses with this size",
+            defaultValue: "4242",
+            required: true,
+            type: "text"
+          }
+        ],
+        difficulty: "medium",
+        tags: ["reconnaissance", "active", "vhost", "fuzzing"],
+        referenceUrl: "https://github.com/ffuf/ffuf"
+      }
+    ]
+  },
+  {
     id: "sensitive-data-discovery",
     name: "Sensitive Data Discovery",
     description: "Scans for potentially sensitive information disclosure.",
