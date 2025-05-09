@@ -22,13 +22,14 @@ export default function DocsIndex() {
           <span className="text-primary">Read the guide →</span>
         </Link>
         
-        {/* Placeholder for future documentation */}
-        <div className="card opacity-50">
-          <h2 className="text-xl font-semibold mb-3 text-gray-400">Coming Soon</h2>
-          <p className="text-gray-500 mb-4">
-            More documentation guides are being developed for other security testing techniques.
+        <Link href="/docs/subdomain-enumeration" className="card hover:bg-gray-800 transition-colors">
+          <h2 className="text-xl font-semibold mb-3 text-primary">Subdomain Enumeration Guide</h2>
+          <p className="text-gray-300 mb-4">
+            Discover techniques for finding subdomains to expand your attack surface. 
+            Includes passive and active enumeration methods, filtering, and advanced strategies.
           </p>
-        </div>
+          <span className="text-primary">Read the guide →</span>
+        </Link>
       </div>
       
       <div className="mt-10 pt-6 border-t border-gray-700">
