@@ -1,0 +1,210 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0070f3;
+  --primary-dark: #0060df;
+  --secondary: #ff4081;
+  --secondary-dark: #c60055;
+  --background-light: #ffffff;
+  --background-dark: #121212;
+  --surface-light: #f5f5f5;
+  --surface-dark: #1e1e1e;
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-color: #64b5f6;
+  --border-color: #333333;
+  --input-bg: #2c2c2c;
+  --card-bg: #252525;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --error-color: #f44336;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Custom utility classes */
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded font-medium transition-colors;
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark text-white;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary hover:bg-secondary-dark text-white;
+  }
+  
+  .card {
+    @apply bg-surface-dark rounded-lg p-6 shadow-lg border border-gray-800;
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+  }
+} 
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Apply theme variables to appropriate elements */
+input, textarea, select {
+  background-color: var(--input-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Update primary color references */
+.text-primary {
+  color: var(--accent-color);
+}
+
+.bg-primary {
+  background-color: var(--accent-color);
+}
+
+.border-primary {
+  border-color: var(--accent-color);
+}
+
+.ring-primary {
+  --tw-ring-color: var(--accent-color);
+}
+
+/* Theme transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --text-primary: #121212;
+  --text-secondary: #6b6b6b;
+  --accent-color: #1976d2;
+  --border-color: #e0e0e0;
+  --input-bg: #f9f9f9;
+  --card-bg: #ffffff;
+}
+
+/* Accessibility Styles */
+
+/* High Contrast Mode */
+.high-contrast {
+  --primary: #0099ff;
+  --primary-dark: #0077cc;
+  --secondary: #ff0066;
+  --secondary-dark: #cc0052;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --accent-color: #00ccff;
+  --border-color: #ffffff;
+  
+  /* Increase contrast between text and background */
+  color: white;
+  background-color: black;
+}
+
+.high-contrast [data-theme="light"] {
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --bg-primary: #ffffff;
+  --bg-secondary: #ffffff;
+  --border-color: #000000;
+  
+  color: black;
+  background-color: white;
+}
+
+.high-contrast a {
+  text-decoration: underline;
+}
+
+.high-contrast button,
+.high-contrast .btn {
+  border: 2px solid white;
+}
+
+.high-contrast [data-theme="light"] button,
+.high-contrast [data-theme="light"] .btn {
+  border: 2px solid black;
+}
+
+/* Large Text Mode */
+.large-text {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.large-text h1 {
+  font-size: 2.5rem;
+}
+
+.large-text h2 {
+  font-size: 2rem;
+}
+
+.large-text h3 {
+  font-size: 1.75rem;
+}
+
+.large-text button,
+.large-text .btn,
+.large-text input,
+.large-text select {
+  font-size: 1.2rem;
+  padding: 0.75rem;
+}
+
+/* Reduced Motion */
+.reduced-motion * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Screen Reader Optimizations */
+.screen-reader-optimized .sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0.5rem !important;
+  margin: 0.5rem 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  border: 1px solid var(--border-color) !important;
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  display: block !important;
+}
+
+.screen-reader-optimized .sr-only:before {
+  content: "Screen reader content: ";
+  font-weight: bold;
+} 
