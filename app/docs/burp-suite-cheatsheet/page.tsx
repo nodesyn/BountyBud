@@ -33,7 +33,7 @@ export default function BurpSuiteCheatsheetPage() {
                 <li><strong>Site map</strong>: Tree structure of discovered application content.</li>
                 <li><strong>Scope</strong>: Define what hosts and paths are in scope for testing.
                   <ul className="list-disc pl-6 mt-1">
-                    <li>Right-click on a request/host -> "Add to scope".</li>
+                    <li>Right-click on a request/host -{'>'} "Add to scope".</li>
                     <li>Configure scope settings to include/exclude specific items.</li>
                   </ul>
                 </li>
@@ -73,7 +73,7 @@ export default function BurpSuiteCheatsheetPage() {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Key Hotkeys</h2>
         <div className="card mb-6">
-          <p className="mb-2 text-sm text-gray-400">Default - Check User Options > Misc > Hotkeys</p>
+          <p className="mb-2 text-sm text-gray-400">Default - Check User Options {'>'}  Misc {'>'}  Hotkeys</p>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Ctrl+R / Cmd+R</strong>: Send request to Repeater.</li>
             <li><strong>Ctrl+I / Cmd+I</strong>: Send request to Intruder.</li>
@@ -144,10 +144,10 @@ export default function BurpSuiteCheatsheetPage() {
         <h2 className="text-2xl font-semibold mb-4">Common Tasks & Where to Find Them</h2>
         <div className="card mb-6">
           <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Searching HTTP History</strong>: Proxy > HTTP history. Use the filter bar.</li>
-            <li><strong>Saving/Loading Project</strong>: Project menu > Save copy / Open project.</li>
-            <li><strong>Spidering (Discovering Content)</strong>: Target > Site map. Right-click host/folder > "Spider this host/branch". (Use with caution, can be noisy).</li>
-            <li><strong>Active Scanning (Pro Version)</strong>: Target > Site map. Right-click host/folder > "Actively scan this host/branch".</li>
+            <li><strong>Searching HTTP History</strong>: Proxy {'>'}  HTTP history. Use the filter bar.</li>
+            <li><strong>Saving/Loading Project</strong>: Project menu {'>'}  Save copy / Open project.</li>
+            <li><strong>Spidering (Discovering Content)</strong>: Target {'>'}  Site map. Right-click host/folder {'>'}  "Spider this host/branch". (Use with caution, can be noisy).</li>
+            <li><strong>Active Scanning (Pro Version)</strong>: Target {'>'}  Site map. Right-click host/folder {'>'}  "Actively scan this host/branch".</li>
             <li><strong>Passive Scanning</strong>: Occurs automatically as you browse.</li>
             <li><strong>Engagements Tools</strong>: Useful for documenting findings (Pro version).</li>
           </ul>
