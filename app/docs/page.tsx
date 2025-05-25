@@ -70,14 +70,6 @@ export default function DocsIndex() {
           <span className="text-primary">Read the guide →</span>
         </Link>
 
-        <Link href="/docs/owasp-wstg-summary" className="card hover:bg-gray-800 transition-colors">
-          <h2 className="text-xl font-semibold mb-3 text-primary">OWASP WSTG Summary</h2>
-          <p className="text-gray-300 mb-4">
-            A summary of the OWASP Web Security Testing Guide, providing a framework for web app pentesting.
-          </p>
-          <span className="text-primary">Read the guide →</span>
-        </Link>
-
         <Link href="/docs/nikto-guide" className="card hover:bg-gray-800 transition-colors">
           <h2 className="text-xl font-semibold mb-3 text-primary">Nikto Guide</h2>
           <p className="text-gray-300 mb-4">
