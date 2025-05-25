@@ -87,7 +87,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="w-full">
         <h2 className="text-2xl font-bold mb-8 text-center">Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="card">
             <h3 className="text-xl font-semibold mb-3 text-primary">
               Command Generation
@@ -98,6 +98,18 @@ export default function Home() {
             </p>
             <Link href="/tools" className="text-primary hover:underline">
               Try it now →
+            </Link>
+          </div>
+
+          <div className="card">
+            <h3 className="text-xl font-semibold mb-3 text-primary">
+              XSS Payload Generator
+            </h3>
+            <p className="text-gray-300 mb-4">
+              Generate context-aware XSS payloads with encoding options and bypass techniques. Perfect for security testing and learning.
+            </p>
+            <Link href="/xss-payloads" className="text-primary hover:underline">
+              Generate payloads →
             </Link>
           </div>
 
