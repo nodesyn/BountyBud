@@ -41,6 +41,11 @@ export default function Navigation() {
                 </Link>
               </li>
               <li>
+                <Link href="/xss-payloads" className={isActive("/xss-payloads")}>
+                  XSS Payloads
+                </Link>
+              </li>
+              <li>
                 <Link
                   href="/security-tools"
                   className={isActive("/security-tools")}
@@ -134,6 +139,15 @@ export default function Navigation() {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Command Tools
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/xss-payloads"
+                    className={isActive("/xss-payloads")}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    XSS Payloads
                   </Link>
                 </li>
                 <li>
