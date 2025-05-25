@@ -37,6 +37,14 @@ export default function DocsIndex() {
           <span className="text-primary">Read the guide →</span>
         </Link>
 
+        <Link href="/docs/owasp-juice-shop-guide" className="card hover:bg-gray-800 transition-colors">
+          <h2 className="text-xl font-semibold mb-3 text-primary">OWASP Juice Shop Attack Guide</h2>
+          <p className="text-gray-300 mb-4">
+            A systematic approach to attacking OWASP Juice Shop, covering setup, exploration strategies, and challenge progression from beginner to expert level.
+          </p>
+          <span className="text-primary">Read the guide →</span>
+        </Link>
+
         <Link href="/docs/security-tools-cheatsheet" className="card hover:bg-gray-800 transition-colors">
           <h2 className="text-xl font-semibold mb-3 text-primary">Security Tools Cheatsheet</h2>
           <p className="text-gray-300 mb-4">
