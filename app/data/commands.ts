@@ -54,9 +54,9 @@ export const categories: CommandCategory[] = [
       },
       {
         id: "live-subdomain-filtering",
-        name: "Live Subdomain Filtering",
-        description: "Filters discovered subdomains using httpx and saves the alive ones to a file.",
-        command: "cat subdomain.txt | httpx-toolkit -ports {ports} -threads {threads} > subdomains_alive.txt",
+        name: "Live Subdomain Filtering (Polite)",
+        description: "Filters discovered subdomains using httpx with polite timing and reduced threads to avoid overwhelming the target.",
+        command: "cat subdomain.txt | httpx-toolkit -ports {ports} -threads {threads} -timeout 15 -rate-limit 10 -random-agent > subdomains_alive.txt",
         placeholders: [
           {
             key: "ports",
@@ -67,14 +67,14 @@ export const categories: CommandCategory[] = [
           },
           {
             key: "threads",
-            description: "Number of threads",
-            defaultValue: "200",
+            description: "Number of threads (reduced for politeness)",
+            defaultValue: "50",
             required: true,
             type: "number"
           }
         ],
         difficulty: "medium",
-        tags: ["reconnaissance", "active"],
+        tags: ["reconnaissance", "active", "polite"],
         referenceUrl: "https://github.com/projectdiscovery/httpx"
       },
       {
@@ -198,9 +198,9 @@ export const categories: CommandCategory[] = [
     commands: [
       {
         id: "gobuster-dir",
-        name: "Gobuster Directory Scan",
-        description: "Fast directory brute force scanning with Gobuster.",
-        command: "gobuster dir -u {url} -w {wordlist} -t {threads} -x {extensions} -o gobuster_results.txt",
+        name: "Gobuster Directory Scan (Polite)",
+        description: "Polite directory brute force scanning with Gobuster using reduced threads and delays.",
+        command: "gobuster dir -u {url} -w {wordlist} -t {threads} -x {extensions} --delay 300ms --timeout 15s --random-agent -o gobuster_results.txt",
         placeholders: [
           {
             key: "url",
@@ -217,8 +217,8 @@ export const categories: CommandCategory[] = [
           },
           {
             key: "threads",
-            description: "Number of threads",
-            defaultValue: "10",
+            description: "Number of threads (reduced for politeness)",
+            defaultValue: "5",
             required: true,
             type: "number"
           },
@@ -231,7 +231,7 @@ export const categories: CommandCategory[] = [
           }
         ],
         difficulty: "easy",
-        tags: ["reconnaissance", "active", "brute-force"],
+        tags: ["reconnaissance", "active", "brute-force", "polite"],
         outputExample: "===============================================================\nGobuster v3.2.0\nby OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)\n===============================================================\n[+] Url:                     https://example.com\n[+] Method:                  GET\n[+] Threads:                 10\n[+] Wordlist:                /usr/share/wordlists/dirb/common.txt\n[+] Negative Status codes:   404\n[+] User Agent:              gobuster/3.2.0\n[+] Extensions:              php,html,txt\n[+] Timeout:                 10s\n===============================================================\n/admin                (Status: 200) [Size: 1234]\n/images               (Status: 301) [Size: 178] [--> /images/]\n/index.html           (Status: 200) [Size: 4567]\n/login.php            (Status: 200) [Size: 789]\n/config.php           (Status: 403) [Size: 345]\n===============================================================",
         referenceUrl: "https://github.com/OJ/gobuster"
       },
@@ -268,9 +268,9 @@ export const categories: CommandCategory[] = [
       },
       {
         id: "feroxbuster-basic",
-        name: "Feroxbuster Basic Scan",
-        description: "Fast recursive content discovery with Feroxbuster.",
-        command: "feroxbuster --url {url} --wordlist {wordlist} --threads {threads} --depth {depth} --output ferox_results.txt",
+        name: "Feroxbuster Basic Scan (Polite)",
+        description: "Polite recursive content discovery with Feroxbuster using reduced threads and rate limiting.",
+        command: "feroxbuster --url {url} --wordlist {wordlist} --threads {threads} --depth {depth} --rate-limit 10 --timeout 15 --random-agent --output ferox_results.txt",
         placeholders: [
           {
             key: "url",
@@ -287,8 +287,8 @@ export const categories: CommandCategory[] = [
           },
           {
             key: "threads",
-            description: "Number of threads",
-            defaultValue: "50",
+            description: "Number of threads (reduced for politeness)",
+            defaultValue: "10",
             required: true,
             type: "number"
           },
@@ -301,7 +301,7 @@ export const categories: CommandCategory[] = [
           }
         ],
         difficulty: "medium",
-        tags: ["reconnaissance", "active", "recursive"],
+        tags: ["reconnaissance", "active", "recursive", "polite"],
         referenceUrl: "https://github.com/epi052/feroxbuster"
       },
       {
@@ -471,9 +471,9 @@ export const categories: CommandCategory[] = [
     commands: [
       {
         id: "nuclei-exposures",
-        name: "Nuclei Exposures Scan",
-        description: "Scans for exposed sensitive data using Nuclei templates.",
-        command: "nuclei -u https://{domain} -t exposures/",
+        name: "Nuclei Exposures Scan (Polite)",
+        description: "Scans for exposed sensitive data using Nuclei templates with rate limiting and polite timing.",
+        command: "nuclei -u https://{domain} -t exposures/ -rate-limit 10 -timeout 15 -retries 1 -header \"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"",
         placeholders: [
           {
             key: "domain",
@@ -483,7 +483,7 @@ export const categories: CommandCategory[] = [
           }
         ],
         difficulty: "medium",
-        tags: ["reconnaissance", "active"],
+        tags: ["reconnaissance", "active", "polite"],
         referenceUrl: "https://github.com/projectdiscovery/nuclei"
       },
       {
@@ -616,26 +616,26 @@ export const categories: CommandCategory[] = [
     commands: [
       {
         id: "wpscan-basic",
-        name: "Basic WPScan",
-        description: "Performs a basic WPScan enumeration of a WordPress site.",
-        command: "wpscan --url https://{domain} --enumerate u",
+        name: "Basic WPScan (Polite)",
+        description: "Performs a polite WPScan enumeration of a WordPress site with rate limiting and stealth options.",
+        command: "wpscan --url https://{domain} --enumerate u --throttle 500 --request-timeout 60 --connect-timeout 30 --random-user-agent",
         placeholders: [
           { key: "domain", description: "Target WordPress domain (e.g., example.com)", required: true, type: "text" }
         ],
         difficulty: "easy",
-        tags: ["cms-scanning", "wordpress", "wpscan", "active"],
+        tags: ["cms-scanning", "wordpress", "wpscan", "active", "polite"],
         referenceUrl: "/docs/wpscan-guide"
       },
       {
         id: "wpscan-plugins",
-        name: "WPScan Plugins Scan",
-        description: "Scans for vulnerable plugins in a WordPress site.",
-        command: "wpscan --url https://{domain} --plugins-detection",
+        name: "WPScan Plugins Scan (Polite)",
+        description: "Scans for vulnerable plugins in a WordPress site with polite timing and rate limiting.",
+        command: "wpscan --url https://{domain} --plugins-detection aggressive --throttle 750 --request-timeout 60 --connect-timeout 30 --random-user-agent",
         placeholders: [
           { key: "domain", description: "Target WordPress domain (e.g., example.com)", required: true, type: "text" }
         ],
         difficulty: "medium",
-        tags: ["cms-scanning", "wordpress", "wpscan", "active"],
+        tags: ["cms-scanning", "wordpress", "wpscan", "active", "polite"],
         referenceUrl: "/docs/wpscan-guide"
       }
     ]
@@ -647,9 +647,9 @@ export const categories: CommandCategory[] = [
     commands: [
       {
         id: "nmap-service-scan",
-        name: "Nmap Service Scan",
-        description: "Scans for service versions on all ports.",
-        command: "nmap -sV -p- {domain}",
+        name: "Nmap Service Scan (Polite)",
+        description: "Scans for service versions on common ports with polite timing to avoid detection.",
+        command: "nmap -sV -T2 -p 80,443,8080,8443,3000,5000 --max-retries 1 --host-timeout 30s {domain}",
         placeholders: [
           {
             key: "domain",
@@ -659,7 +659,7 @@ export const categories: CommandCategory[] = [
           }
         ],
         difficulty: "medium",
-        tags: ["reconnaissance", "active"],
+        tags: ["reconnaissance", "active", "polite"],
         referenceUrl: "https://nmap.org/"
       }
     ]
@@ -1612,27 +1612,27 @@ export const categories: CommandCategory[] = [
     commands: [
       {
         id: "nmap-full-scan",
-        name: "Nmap Full Scan (All Ports, OS Detection, Scripts, Version Info)",
-        description: "Performs a comprehensive Nmap scan including all TCP ports, OS detection, default scripts, and service versioning.",
-        command: "nmap -p- -A -sV -T4 {target} -oN nmap_full_scan.txt",
+        name: "Nmap Comprehensive Scan (Polite)",
+        description: "Performs a comprehensive but polite Nmap scan on common ports with stealth timing and limited scripts.",
+        command: "nmap -sS -T2 -p 21,22,23,25,53,80,110,111,135,139,143,443,993,995,1723,3306,3389,5432,5900,8080 -sV --version-intensity 2 --max-retries 1 --host-timeout 60s {target} -oN nmap_polite_scan.txt",
         placeholders: [
           { key: "target", description: "Target IP address or hostname", required: true, type: "text" }
         ],
         difficulty: "hard",
-        tags: ["network-scanning", "port-scanning", "os-detection", "version-detection", "script-scanning", "active"],
+        tags: ["network-scanning", "port-scanning", "version-detection", "active", "polite", "stealth"],
         referenceUrl: "https://nmap.org/book/man.html"
       },
       {
         id: "nmap-vulners",
-        name: "Nmap Vulners Scan",
-        description: "Uses Nmap with the Vulners script to detect vulnerabilities based on service versions.",
-        command: "nmap -sV --script vulners --script-args mincvss={mincvss} {target}",
+        name: "Nmap Vulners Scan (Polite)",
+        description: "Uses Nmap with the Vulners script to detect vulnerabilities with polite timing and limited port range.",
+        command: "nmap -sV -T2 -p 80,443,22,21,25,53,110,143,993,995,3389 --script vulners --script-args mincvss={mincvss} --max-retries 1 --host-timeout 45s {target}",
         placeholders: [
           { key: "target", description: "Target IP address or hostname", required: true, type: "text" },
           { key: "mincvss", description: "Minimum CVSS score (e.g., 7.0)", defaultValue: "7.0", required: false, type: "text" }
         ],
         difficulty: "medium",
-        tags: ["vulnerability-scanning", "nmap", "active"],
+        tags: ["vulnerability-scanning", "nmap", "active", "polite"],
         referenceUrl: "https://github.com/vulnersCom/nmap-vulners",
         outputExample: "Starting Nmap ... \\nPORT    STATE SERVICE VERSION\\n... \\n|_vulners: ... MS17-010 ..."
       },
@@ -1651,27 +1651,27 @@ export const categories: CommandCategory[] = [
       },
       {
         id: "nikto-basic",
-        name: "Nikto Basic Scan",
-        description: "Performs a basic web server scan with Nikto.",
-        command: "nikto -h {target}",
+        name: "Nikto Basic Scan (Polite)",
+        description: "Performs a polite web server scan with Nikto using stealth options and reduced request rate.",
+        command: "nikto -h {target} -Tuning 1,2,3,5 -timeout 10 -Pause 2 -useragent \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"",
         placeholders: [
           { key: "target", description: "Target host or IP address (e.g., example.com or 192.168.1.100)", required: true, type: "text" }
         ],
         difficulty: "medium",
-        tags: ["web-scanning", "vulnerability-scanning", "nikto", "active"],
+        tags: ["web-scanning", "vulnerability-scanning", "nikto", "active", "polite", "stealth"],
         referenceUrl: "/docs/nikto-guide",
         outputExample: "- Nikto v2.1.6\n---------------------------------------------------------------------------\n+ Target IP:          192.168.1.100\n+ Target Hostname:    example.com\n+ Target Port:        80\n+ Start Time:         2023-10-27 10:00:00\n---------------------------------------------------------------------------\n+ Server: Apache/2.4.52 (Ubuntu)\n+ Retrieved x-powered-by header: PHP/8.1.2\n+ The anti-clickjacking X-Frame-Options header is not present.\n+ OSVDB-3233: /icons/README: Apache default file found.\n+ Allowed HTTP Methods: GET, HEAD, POST, OPTIONS\n+ Public HTTP Methods: GET, HEAD, POST, OPTIONS, TRACE"
       },
       {
         id: "joomscan-basic",
-        name: "JoomScan Basic",
-        description: "Scans a Joomla CMS for known vulnerabilities.",
-        command: "joomscan --url {target_url}",
+        name: "JoomScan Basic (Polite)",
+        description: "Scans a Joomla CMS for known vulnerabilities with polite timing and reduced aggressiveness.",
+        command: "joomscan --url {target_url} --timeout 15 --user-agent \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"",
         placeholders: [
           { key: "target_url", description: "Full URL of the Joomla site (e.g., http://example.com/joomla)", required: true, type: "text" }
         ],
         difficulty: "medium",
-        tags: ["cms-scanning", "joomla", "joomscan", "active"],
+        tags: ["cms-scanning", "joomla", "joomscan", "active", "polite"],
         referenceUrl: "/docs/joomscan-guide",
         outputExample: "JoomScan Report\n====================================\nTarget: http://example.com/joomla\nDetected Joomla Version: 3.9.27\n[+] Core Joomla Vulnerabilities:\n  [!] CVE-2021-XXXX - SQL Injection in com_content\n[+] Interesting URLs:\n  /administrator/\n  /configuration.php"
       },

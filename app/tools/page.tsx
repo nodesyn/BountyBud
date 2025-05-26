@@ -75,11 +75,26 @@ export default function CommandGeneratorPage() {
       </ErrorBoundary>
 
       <div className="card">
-        <h2 className="text-xl font-semibold mb-4">Important Disclaimer</h2>
-        <p className="text-gray-300">
-          These commands are provided for educational purposes only. Always ensure you have proper authorization before testing any domain.
-          Unauthorized security testing may be illegal and unethical.
-        </p>
+        <h2 className="text-xl font-semibold mb-4">Important Disclaimer & Ethical Scanning</h2>
+        <div className="space-y-3">
+          <p className="text-gray-300">
+            These commands are provided for educational purposes only. Always ensure you have proper authorization before testing any domain.
+            Unauthorized security testing may be illegal and unethical.
+          </p>
+          <div className="p-3 bg-green-900/30 border border-green-800 rounded-md">
+            <h3 className="text-green-400 font-semibold mb-2">🌱 Polite Scanning Approach</h3>
+            <p className="text-green-200 text-sm">
+              All commands have been optimized for "polite" scanning with reduced thread counts, rate limiting, 
+              and stealth options to minimize impact on target systems. This approach helps avoid:
+            </p>
+            <ul className="list-disc list-inside text-green-200 text-sm mt-2 space-y-1">
+              <li>Overwhelming target servers with excessive requests</li>
+              <li>Triggering security alerts or WAF blocks</li>
+              <li>Causing service disruption or downtime</li>
+              <li>Being detected as malicious activity</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
