@@ -66,89 +66,87 @@ function QuickStart() {
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-16">
-      {/* Hero Section */}
-      <section className="flex flex-col items-center text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">BountyBud</h1>
-        <div className="w-full max-w-xs mb-4">
-          <img
-            src="/bb.png"
-            alt="Bounty Bud"
-            className="w-full h-auto"
-          />
+    <div className="max-w-6xl mx-auto">
+      <div className="flex flex-col gap-16">
+        {/* Hero Section */}
+        <section className="flex flex-col items-center text-center px-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">BountyBud</h1>
+          <div className="w-full max-w-xs mb-4">
+            <img
+              src="/bb.png"
+              alt="Bounty Bud"
+              className="w-full h-auto"
+            />
+          </div>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            A comprehensive toolkit for bug bounty hunters and security
+            researchers to generate commands, discover security tools, and
+            optimize their workflow.
+          </p>
+        </section>
+
+        {/* Features Section */}
+        <section className="w-full px-4">
+          <h2 className="text-2xl font-bold mb-8 text-center">Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link href="/tools" className="card hover:bg-gray-800 transition-colors cursor-pointer group">
+              <h3 className="text-xl font-semibold mb-3 text-primary group-hover:text-primary-light">
+                Command Generation
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Generate tool commands for various security tests with a simple
+                interface. Save time by quickly configuring command parameters.
+              </p>
+              <div className="text-primary group-hover:text-primary-light">
+                Try it now →
+              </div>
+            </Link>
+
+            <Link href="/xss-payloads" className="card hover:bg-gray-800 transition-colors cursor-pointer group">
+              <h3 className="text-xl font-semibold mb-3 text-primary group-hover:text-primary-light">
+                XSS Payload Generator
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Generate context-aware XSS payloads with encoding options and bypass techniques. Perfect for security testing and learning.
+              </p>
+              <div className="text-primary group-hover:text-primary-light">
+                Generate payloads →
+              </div>
+            </Link>
+
+            <Link href="/security-tools" className="card hover:bg-gray-800 transition-colors cursor-pointer group">
+              <h3 className="text-xl font-semibold mb-3 text-primary group-hover:text-primary-light">
+                Security Tools
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Discover and learn about the best security tools for bug bounty
+                hunting. Find installation instructions and documentation links.
+              </p>
+              <div className="text-primary group-hover:text-primary-light">
+                Explore tools →
+              </div>
+            </Link>
+
+            <Link href="/docs" className="card hover:bg-gray-800 transition-colors cursor-pointer group">
+              <h3 className="text-xl font-semibold mb-3 text-primary group-hover:text-primary-light">
+                Documentation & Guides
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Access comprehensive guides and documentation to help you make
+                the most of security tools and optimize your testing workflow.
+              </p>
+              <div className="text-primary group-hover:text-primary-light">
+                View guides →
+              </div>
+            </Link>
+          </div>
+        </section>
+
+        {/* Quick Start Section */}
+        <div className="px-4">
+          <QuickStart />
         </div>
-        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-          A comprehensive toolkit for bug bounty hunters and security
-          researchers to generate commands, discover security tools, and
-          optimize their workflow.
-        </p>
-      </section>
-
-      {/* Features Section */}
-      <section className="w-full">
-        <h2 className="text-2xl font-bold mb-8 text-center">Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="card">
-            <h3 className="text-xl font-semibold mb-3 text-primary">
-              Command Generation
-            </h3>
-            <p className="text-gray-300 mb-4">
-              Generate tool commands for various security tests with a simple
-              interface. Save time by quickly configuring command parameters.
-            </p>
-            <Link href="/tools" className="text-primary hover:underline">
-              Try it now →
-            </Link>
-          </div>
-
-          <div className="card">
-            <h3 className="text-xl font-semibold mb-3 text-primary">
-              XSS Payload Generator
-            </h3>
-            <p className="text-gray-300 mb-4">
-              Generate context-aware XSS payloads with encoding options and bypass techniques. Perfect for security testing and learning.
-            </p>
-            <Link href="/xss-payloads" className="text-primary hover:underline">
-              Generate payloads →
-            </Link>
-          </div>
-
-          <div className="card">
-            <h3 className="text-xl font-semibold mb-3 text-primary">
-              Security Tools
-            </h3>
-            <p className="text-gray-300 mb-4">
-              Discover and learn about the best security tools for bug bounty
-              hunting. Find installation instructions and documentation links.
-            </p>
-            <Link
-              href="/security-tools"
-              className="text-primary hover:underline"
-            >
-              Explore tools →
-            </Link>
-          </div>
-
-          <div className="card">
-            <h3 className="text-xl font-semibold mb-3 text-primary">
-              Documentation & Guides
-            </h3>
-            <p className="text-gray-300 mb-4">
-              Access comprehensive guides and documentation to help you make
-              the most of security tools and optimize your testing workflow.
-            </p>
-            <Link
-              href="/docs"
-              className="text-primary hover:underline"
-            >
-              View guides →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Start Section */}
-      <QuickStart />
+      </div>
     </div>
   );
 }

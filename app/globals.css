@@ -5,6 +5,7 @@
 :root {
   --primary: #0070f3;
   --primary-dark: #0060df;
+  --primary-light: #64b5f6;
   --secondary: #ff4081;
   --secondary-dark: #c60055;
   --background-light: #ffffff;
@@ -55,7 +56,28 @@ html.dark {
     background-color: var(--card-bg);
     border-color: var(--border-color);
   }
-} 
+
+  /* Unified page layout classes */
+  .page-container {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .page-content {
+    @apply space-y-8 px-4;
+  }
+
+  .page-header {
+    @apply mb-4;
+  }
+
+  .page-title {
+    @apply text-3xl font-bold;
+  }
+
+  .page-description {
+    @apply mt-4 text-gray-300;
+  }
+}
 
 @keyframes pulse-subtle {
   0%, 100% {

@@ -68,7 +68,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <ThemeProvider>
           <Navigation />
-          <main className="container mx-auto px-4 py-12 flex-grow">
+          <main className="mx-auto w-full py-12 flex-grow">
             <ErrorBoundary>
               {children}
             </ErrorBoundary>
