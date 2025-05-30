@@ -19,8 +19,8 @@ const server = createServer(async (req, res) => {
     const url = req.url || '/';
     const method = req.method || 'GET';
     
-    // IMMEDIATE health check responses for Replit Autoscale
-    if ((url === '/' || url === '/health') && method === 'GET') {
+    // IMMEDIATE health check responses for Replit Autoscale - only /health endpoint
+    if (url === '/health' && method === 'GET') {
       res.writeHead(200, { 
         'Content-Type': 'text/plain',
         'Cache-Control': 'no-cache, no-store, must-revalidate'
