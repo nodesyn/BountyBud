@@ -13,8 +13,8 @@ ignoredPaths = [".next", "node_modules", ".git"]
 
 # Configures the run button
 [deployment]
-run = ["npm", "start"]
-build = ["npm", "run", "build"]
+run = ["sh", "-c", "NODE_ENV=production node .next/standalone/server.js"]
+build = ["sh", "-c", "npm run build"]
 ignorePorts = false
 
 # Packager configuration
