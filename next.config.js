@@ -23,11 +23,7 @@ const nextConfig = {
       },
     ];
   },
-  // Ensure proper port binding for Replit
-  server: {
-    host: '0.0.0.0',
-    port: parseInt(process.env.PORT || '3000', 10),
-  },
+  
 };
 
 module.exports = nextConfig;

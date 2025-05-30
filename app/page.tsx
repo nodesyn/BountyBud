@@ -1,11 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from 'next/dynamic';
 
-function QuickStart() {
+// Lightweight loading placeholder for features section
+function FeaturesLoading() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className="card animate-pulse">
+          <div className="h-6 bg-gray-700 rounded mb-3"></div>
+          <div className="space-y-2 mb-4">
+            <div className="h-4 bg-gray-700 rounded"></div>
+            <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+          </div>
+          <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Lazy load features section
+const FeaturesSection = dynamic(() => import('./FeaturesSection'), {
+  loading: () => <FeaturesLoading />,
+  ssr: false
+});
+
+function QuickStartForm() {
   const [domain, setDomain] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
@@ -65,10 +89,18 @@ function QuickStart() {
 }
 
 export default function Home() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Defer heavy operations to after initial render
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="max-w-6xl mx-auto">
       <div className="flex flex-col gap-16">
-        {/* Hero Section */}
+        {/* Hero Section - Critical above-the-fold content */}
         <section className="flex flex-col items-center text-center px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">BountyBud</h1>
           <div className="w-full max-w-xs mb-4">
@@ -76,6 +108,8 @@ export default function Home() {
               src="/bb.png"
               alt="Bounty Bud"
               className="w-full h-auto"
+              loading="eager"
+              fetchPriority="high"
             />
           </div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -85,66 +119,19 @@ export default function Home() {
           </p>
         </section>
 
-        {/* Features Section */}
+        {/* Features Section - Lazy loaded */}
         <section className="w-full px-4">
           <h2 className="text-2xl font-bold mb-8 text-center">Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Link href="/tools" className="card hover:bg-gray-800 transition-colors cursor-pointer group">
-              <h3 className="text-xl font-semibold mb-3 text-primary group-hover:text-primary-light">
-                Command Generation
-              </h3>
-              <p className="text-gray-300 mb-4">
-                Generate tool commands for various security tests with a simple
-                interface. Save time by quickly configuring command parameters.
-              </p>
-              <div className="text-primary group-hover:text-primary-light">
-                Try it now →
-              </div>
-            </Link>
-
-            <Link href="/xss-payloads" className="card hover:bg-gray-800 transition-colors cursor-pointer group">
-              <h3 className="text-xl font-semibold mb-3 text-primary group-hover:text-primary-light">
-                XSS Payload Generator
-              </h3>
-              <p className="text-gray-300 mb-4">
-                Generate context-aware XSS payloads with encoding options and bypass techniques. Perfect for security testing and learning.
-              </p>
-              <div className="text-primary group-hover:text-primary-light">
-                Generate payloads →
-              </div>
-            </Link>
-
-            <Link href="/security-tools" className="card hover:bg-gray-800 transition-colors cursor-pointer group">
-              <h3 className="text-xl font-semibold mb-3 text-primary group-hover:text-primary-light">
-                Security Tools
-              </h3>
-              <p className="text-gray-300 mb-4">
-                Discover and learn about the best security tools for bug bounty
-                hunting. Find installation instructions and documentation links.
-              </p>
-              <div className="text-primary group-hover:text-primary-light">
-                Explore tools →
-              </div>
-            </Link>
-
-            <Link href="/docs" className="card hover:bg-gray-800 transition-colors cursor-pointer group">
-              <h3 className="text-xl font-semibold mb-3 text-primary group-hover:text-primary-light">
-                Documentation & Guides
-              </h3>
-              <p className="text-gray-300 mb-4">
-                Access comprehensive guides and documentation to help you make
-                the most of security tools and optimize your testing workflow.
-              </p>
-              <div className="text-primary group-hover:text-primary-light">
-                View guides →
-              </div>
-            </Link>
-          </div>
+          <Suspense fallback={<FeaturesLoading />}>
+            {isLoaded && <FeaturesSection />}
+          </Suspense>
         </section>
 
-        {/* Quick Start Section */}
+        {/* Quick Start Section - Lazy loaded */}
         <div className="px-4">
-          <QuickStart />
+          <Suspense fallback={<div className="bg-surface-dark p-8 rounded-lg animate-pulse h-48"></div>}>
+            {isLoaded && <QuickStartForm />}
+          </Suspense>
         </div>
       </div>
     </div>
