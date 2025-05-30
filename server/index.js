@@ -26,9 +26,9 @@ nextApp
       res.status(500).send("Internal Server Error");
     });
 
-    serverInstance = server.listen(5000, "0.0.0.0", (err) => {
+    serverInstance = server.listen(3000, "0.0.0.0", (err) => {
       if (err) throw err;
-      console.log("> Ready on http://0.0.0.0:5000");
+      console.log("> Ready on http://0.0.0.0:3000");
     });
   })
   .catch((err) => {
