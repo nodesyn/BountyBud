@@ -5,6 +5,9 @@ run = "npm run dev"
 # The primary language of the repl
 language = "nodejs"
 
+# Specify Node.js modules
+modules = ["nodejs-20"]
+
 # List of files that will not be uploaded to the server on a push
 ignoredPaths = [".next", "node_modules", ".git"]
 
