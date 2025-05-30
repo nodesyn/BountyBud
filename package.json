@@ -45,5 +45,13 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "description": "BountyBud is a comprehensive toolkit for bug bounty hunters and security researchers designed to streamline the workflow of security testing. The platform generates optimized command-line commands, provides a curated collection of security tools, and offers resources to enhance your bug hunting workflow.",
+  "main": "check-deps.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

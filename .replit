@@ -33,3 +33,19 @@ start = "typescript-language-server --stdio"
 # Nix configuration
 [nix]
 channel = "stable-22_11"
+
+[workflows]
+runButton = "Install and Start"
+
+[[workflows.workflow]]
+name = "Install and Start"
+author = 3754017
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
