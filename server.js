@@ -19,17 +19,14 @@ const server = createServer(async (req, res) => {
     const url = req.url || '/';
     const method = req.method || 'GET';
     
-    // IMMEDIATE health check responses for Replit Autoscale
-    if ((url === '/health' || url === '/') && method === 'GET') {
-      // For health checks, return immediately
-      if (url === '/health' || (url === '/' && req.headers['user-agent']?.includes('GoogleHC'))) {
-        res.writeHead(200, { 
-          'Content-Type': 'text/plain',
-          'Cache-Control': 'no-cache, no-store, must-revalidate'
-        });
-        res.end('OK');
-        return;
-      }
+    // IMMEDIATE health check response for root path
+    if (url === '/' && method === 'GET' && req.headers['user-agent']?.includes('GoogleHC')) {
+      res.writeHead(200, { 
+        'Content-Type': 'text/plain',
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+      });
+      res.end('OK');
+      return;
     }
 
     // If Next.js isn't ready yet, return service unavailable for other routes
@@ -62,7 +59,7 @@ server.listen(port, hostname, (err) => {
     process.exit(1);
   }
   console.log(`✅ HTTP Server listening on http://${hostname}:${port}`);
-  console.log(`✅ Health checks responding immediately at / and /health`);
+  console.log(`✅ Health checks responding immediately at / for GoogleHC`);
 });
 
 // Initialize Next.js in parallel with correct configuration
