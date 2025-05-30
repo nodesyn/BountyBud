@@ -2,13 +2,31 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  compress: true, // Enable compression for better performance
+  compress: true,
   experimental: {
     optimizeCss: true,
   },
-  // Enable static exports for Replit deployment
   images: {
     unoptimized: true,
+  },
+  // Configure for Replit deployment
+  async headers() {
+    return [
+      {
+        source: '/api/health',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
+  // Ensure proper port binding for Replit
+  server: {
+    host: '0.0.0.0',
+    port: parseInt(process.env.PORT || '3000', 10),
   },
 };
 
