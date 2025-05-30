@@ -43,6 +43,14 @@ export default function DocsIndex() {
               <span className="text-primary">Read the guide →</span>
             </Link>
 
+            <Link href="/docs/xss-testing-guide" className="card hover:bg-gray-800 transition-colors">
+              <h3 className="text-xl font-semibold mb-3 text-primary">Comprehensive XSS Testing Guide</h3>
+              <p className="text-gray-300 mb-4">
+                A complete guide to finding and testing Cross-Site Scripting vulnerabilities, with detailed testing procedures, payloads, and bypass techniques.
+              </p>
+              <span className="text-primary">Read the guide →</span>
+            </Link>
+
             <Link href="/docs/owasp-juice-shop-guide" className="card hover:bg-gray-800 transition-colors">
               <h3 className="text-xl font-semibold mb-3 text-primary">OWASP Juice Shop Attack Guide</h3>
               <p className="text-gray-300 mb-4">
