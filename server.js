@@ -19,14 +19,17 @@ const server = createServer(async (req, res) => {
     const url = req.url || '/';
     const method = req.method || 'GET';
     
-    // IMMEDIATE health check responses for Replit Autoscale - only /health endpoint
-    if (url === '/health' && method === 'GET') {
-      res.writeHead(200, { 
-        'Content-Type': 'text/plain',
-        'Cache-Control': 'no-cache, no-store, must-revalidate'
-      });
-      res.end('OK');
-      return;
+    // IMMEDIATE health check responses for Replit Autoscale
+    if ((url === '/health' || url === '/') && method === 'GET') {
+      // For health checks, return immediately
+      if (url === '/health' || (url === '/' && req.headers['user-agent']?.includes('GoogleHC'))) {
+        res.writeHead(200, { 
+          'Content-Type': 'text/plain',
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
+        });
+        res.end('OK');
+        return;
+      }
     }
 
     // If Next.js isn't ready yet, return service unavailable for other routes
@@ -62,8 +65,19 @@ server.listen(port, hostname, (err) => {
   console.log(`✅ Health checks responding immediately at / and /health`);
 });
 
-// Initialize Next.js in parallel
-const app = next({ dev, hostname, port });
+// Initialize Next.js in parallel with correct configuration
+const app = next({ 
+  dev, 
+  hostname: '0.0.0.0', 
+  port: port,
+  conf: {
+    // Ensure Next.js uses the correct hostname for deployment
+    server: {
+      hostname: '0.0.0.0',
+      port: port
+    }
+  }
+});
 
 console.log('⏳ Initializing Next.js app...');
 app.prepare()
