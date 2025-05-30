@@ -1,0 +1,35 @@
+
+# The command that runs the program
+run = "npm run dev"
+
+# The primary language of the repl
+language = "nodejs"
+
+# List of files that will not be uploaded to the server on a push
+ignoredPaths = [".next", "node_modules", ".git"]
+
+# Configures the run button
+[deployment]
+run = ["npm", "start"]
+build = ["npm", "run", "build"]
+ignorePorts = false
+
+# Packager configuration
+[packager]
+language = "nodejs"
+
+[packager.features]
+enabledForHosting = false
+packageSearch = true
+guessImports = true
+
+# Language server configuration
+[languages.javascript]
+pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
+
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
+
+# Nix configuration
+[nix]
+channel = "stable-22_11"
