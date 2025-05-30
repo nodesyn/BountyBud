@@ -1,67 +1,44 @@
-
-# The command that runs the program
+modules = ["nodejs-20", "bash", "web"]
 run = "npm run dev"
+hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
-# The primary language of the repl
-language = "nodejs"
-
-# Specify Node.js modules
-modules = ["nodejs-20"]
-
-# List of files that will not be uploaded to the server on a push
-ignoredPaths = [".next", "node_modules", ".git"]
-
-# Configures the run button
-[deployment]
-run = ["sh", "-c", "npm start"]
-build = ["sh", "-c", "npm ci && npm run build"]
-ignorePorts = false
-
-# Packager configuration
-[packager]
-language = "nodejs"
-
-[packager.features]
-enabledForHosting = false
-packageSearch = true
-guessImports = true
-
-# Language server configuration
-[languages.javascript]
-pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
-
-[languages.javascript.languageServer]
-start = "typescript-language-server --stdio"
-
-# Nix configuration
 [nix]
-channel = "stable-22_11"
+channel = "stable-24_05"
+packages = ["jq"]
 
-[workflows]
-runButton = "Development Server"
-
-[[workflows.workflow]]
-name = "Install and Start"
-author = 3754017
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm install"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run dev"
-
-[[workflows.workflow]]
-name = "Development Server"
-author = 3754017
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run dev"
+[deployment]
+deploymentTarget = "autoscale"
+run = ["npm", "run", "start"]
+build = ["npm", "run", "build"]
 
 [[ports]]
 localPort = 3000
 externalPort = 3000
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[objectStorage]
+defaultBucketID = "replit-objstore-8af7ce5f-7b02-400a-b475-652f0383c43e"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+waitForPort = 5000
