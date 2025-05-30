@@ -19,12 +19,9 @@ const server = createServer(async (req, res) => {
     const url = req.url || '/';
     const method = req.method || 'GET';
     
-    // IMMEDIATE health check response for root path
-    if (url === '/' && method === 'GET' && req.headers['user-agent']?.includes('GoogleHC')) {
-      res.writeHead(200, { 
-        'Content-Type': 'text/plain',
-        'Cache-Control': 'no-cache, no-store, must-revalidate'
-      });
+    // Health check endpoints
+    if ((url === '/' || url === '/health') && method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
       res.end('OK');
       return;
     }
@@ -33,7 +30,7 @@ const server = createServer(async (req, res) => {
     if (!nextAppReady) {
       res.writeHead(503, { 
         'Content-Type': 'application/json',
-        'Retry-After': '5'
+        'Retry-After': '1'
       });
       res.end(JSON.stringify({ 
         status: 'starting', 
@@ -59,35 +56,21 @@ server.listen(port, hostname, (err) => {
     process.exit(1);
   }
   console.log(`✅ HTTP Server listening on http://${hostname}:${port}`);
-  console.log(`✅ Health checks responding immediately at / for GoogleHC`);
+  console.log(`✅ Health checks responding immediately at / and /health`);
 });
 
-// Initialize Next.js in parallel with correct configuration
-const app = next({ 
-  dev, 
-  hostname: '0.0.0.0', 
-  port: port,
-  conf: {
-    // Ensure Next.js uses the correct hostname for deployment
-    server: {
-      hostname: '0.0.0.0',
-      port: port
-    }
-  }
-});
+// Initialize Next.js asynchronously
+const app = next({ dev, hostname, port });
+handle = app.getRequestHandler();
 
-console.log('⏳ Initializing Next.js app...');
-app.prepare()
-  .then(() => {
-    handle = app.getRequestHandler();
-    nextAppReady = true;
-    console.log('✅ Next.js app ready - full functionality available');
-  })
-  .catch((ex) => {
-    console.error('Next.js initialization failed:', ex);
-    console.error('Stack trace:', ex.stack);
-    // Keep server running for health checks even if Next.js fails
-  });
+// Initialize Next.js without blocking server startup
+app.prepare().then(() => {
+  nextAppReady = true;
+  console.log('✅ Next.js app ready - full functionality available');
+}).catch((err) => {
+  console.error('❌ Next.js initialization failed:', err);
+  // Keep server running for health checks even if Next.js fails
+});
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
