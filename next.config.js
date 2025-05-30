@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'standalone', // Optimized for container deployments like repl.it
   compress: true, // Enable compression for better performance
   experimental: {
     optimizeCss: true,
