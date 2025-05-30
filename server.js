@@ -16,11 +16,14 @@ let handle = null;
 // Create HTTP server that responds immediately to health checks
 const server = createServer(async (req, res) => {
   try {
-    // IMMEDIATE health check responses - no delays
-    if (req.url === '/' || req.url === '/health') {
+    const url = req.url || '/';
+    const method = req.method || 'GET';
+    
+    // IMMEDIATE health check responses for Replit Autoscale
+    if ((url === '/' || url === '/health') && method === 'GET') {
       res.writeHead(200, { 
         'Content-Type': 'text/plain',
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
       });
       res.end('OK');
       return;
@@ -28,18 +31,24 @@ const server = createServer(async (req, res) => {
 
     // If Next.js isn't ready yet, return service unavailable for other routes
     if (!nextAppReady) {
-      res.writeHead(503, { 'Content-Type': 'text/plain' });
-      res.end('Service starting, please wait...');
+      res.writeHead(503, { 
+        'Content-Type': 'application/json',
+        'Retry-After': '5'
+      });
+      res.end(JSON.stringify({ 
+        status: 'starting', 
+        message: 'Service initializing, please wait...' 
+      }));
       return;
     }
 
     // Handle with Next.js when ready
-    const parsedUrl = parse(req.url, true);
+    const parsedUrl = parse(url, true);
     await handle(req, res, parsedUrl);
   } catch (err) {
     console.error('Request error:', err);
-    res.writeHead(500, { 'Content-Type': 'text/plain' });
-    res.end('Internal Server Error');
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Internal Server Error' }));
   }
 });
 
@@ -65,15 +74,31 @@ app.prepare()
   })
   .catch((ex) => {
     console.error('Next.js initialization failed:', ex);
+    console.error('Stack trace:', ex.stack);
     // Keep server running for health checks even if Next.js fails
   });
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('Shutting down gracefully...');
-  server.close(() => process.exit(0));
+  server.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('Received SIGINT, shutting down gracefully...');
+  server.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
 });
 
 server.on('error', (err) => {
   console.error('Server error:', err);
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${port} is already in use`);
+    process.exit(1);
+  }
 });
