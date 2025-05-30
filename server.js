@@ -16,24 +16,29 @@ const app = next({
 });
 const handle = app.getRequestHandler();
 
-console.log(`Starting server in ${dev ? 'development' : 'production'} mode`);
+console.log(`Starting server in ${dev ? 'development' : 'production'} mode on port ${port}`);
 
 app.prepare().then(() => {
   const server = createServer(async (req, res) => {
     try {
-      // Add health check endpoint
-      if (req.url === '/health' || req.url === '/') {
-        if (req.url === '/health') {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }));
-          return;
-        }
+      // Handle health check endpoints immediately
+      if (req.url === '/health') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }));
+        return;
       }
 
-      // Parse the URL
+      // For root endpoint, if it's a simple GET request (like health checks), respond quickly
+      if (req.url === '/' && req.method === 'GET' && !req.headers.accept?.includes('text/html')) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ status: 'ok', service: 'bountybud' }));
+        return;
+      }
+
+      // Parse the URL for Next.js handling
       const parsedUrl = parse(req.url, true);
       
-      // Handle the request with Next.js
+      // Handle all other requests with Next.js
       await handle(req, res, parsedUrl);
     } catch (err) {
       console.error('Error occurred handling', req.url, err);
@@ -49,6 +54,11 @@ app.prepare().then(() => {
     }
     console.log(`> Server ready on http://${hostname}:${port}`);
     console.log(`> Health check available at http://${hostname}:${port}/health`);
+  });
+
+  // Handle server errors
+  server.on('error', (err) => {
+    console.error('Server error:', err);
   });
 
   // Graceful shutdown
