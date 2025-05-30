@@ -1,3 +1,7 @@
+export async function GET() {
+  return new Response('OK', { status: 200 });
+}
+
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
